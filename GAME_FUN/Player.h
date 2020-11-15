@@ -14,9 +14,7 @@ using namespace sf;
 class Player
 {
 private:
-	Sprite sprite;
-	Texture texture;
-	IntRect currentFrame;
+	
 	Clock aniTime;
 
 	float width;
@@ -32,16 +30,24 @@ private:
 	
 
 	void initVariables();
-	void initSprite();
+	
 	void initAnimetion();
+	//RectangleShape Hitbox;
+
 
 public:
 	Player();
+	Sprite sprite;
+	Texture texture;
+	IntRect currentFrame;
 	virtual ~Player();
-
+	void playerplatform();
 	void updateInput();
+	void initSprite();
 	void updateAnimation();
 	void update(RenderTarget* target);
 	void render(RenderTarget* target);
+	//Collider GetCollider() {return Collider(Hitbox);}
+
 };
 

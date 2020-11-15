@@ -1,12 +1,14 @@
 #include "Player.h"
+#include"Collider.h"
+#include"Platform.h"
 
 void Player::initVariables()
 {
 	this->movementSpeed = 10.f;
-	this->preWidth = 4.f;
-	this->preHeight = 1.f;
+	this->preWidth = 8.f;
+	this->preHeight = 6.f;
 	this->width = 30.f;
-	this->height = 38.f;
+	this->height = 40.f;
 	this->moving = false;
 	this->standNum = 1;
 	this->moveNum = 1;
@@ -22,7 +24,7 @@ void Player::initSprite()
 	this->currentFrame = IntRect(this->preWidth, this->preHeight, this->width, this->height);
 	this->sprite.setTexture(this->texture);
 	this->sprite.setTextureRect(this->currentFrame);
-	this->sprite.scale(3.f, 3.f);
+	this->sprite.scale(2.f, 2.f);
 	this->sprite.setPosition(0.f, 0.f);
 	
 }
@@ -37,11 +39,20 @@ Player::Player()
 	this->initVariables();
 	this->initSprite();
 	this->initAnimetion();
+	//Hitbox.setSize({ 32.f,32.f });
+	//Hitbox.setOrigin({16.f,16.f});
 }
 
 Player::~Player()
 {
 }
+
+void Player::playerplatform()
+{
+	
+}
+
+
 
 void Player::updateInput()
 {
@@ -109,15 +120,15 @@ void Player::updateAnimation()
 		if (this->moving == false)
 		{
 			this->moveNum = 1;
-			this->preHeight = 1.f;
-			this->preWidth = 4.f;
+			this->preHeight = 6.f;
+			this->width = 32.f;
 			switch (this->standNum)
 			{
-			case 1: this->preWidth = 4.f;
+			case 1: this->preWidth = 52.f;
 				break;
-			case 2: this->preWidth = 35.f;
+			case 2: this->preWidth = 97.f;
 				break;
-			case 3: this->preWidth = 64.f;
+			case 3: this->preWidth = 7.f;
 				break;
 
 			}
@@ -127,25 +138,25 @@ void Player::updateAnimation()
 		else if (this->moving == true)
 		{
 			this->standNum = 3;
-			this->preHeight = 1.f;
-			this->preWidth = 103.f;
+			this->preHeight = 49.f;
+			this->width = 37.f;
 			switch (this->moveNum)
 			{
-			case 1: this->preWidth = 104.f;
+			case 1: this->preWidth = 5.f;
 				break;
-			case 2: this->preWidth = 139.f;
+			case 2: this->preWidth = 52.f;
 				break;
-			case 3: this->preWidth = 168.f;
+			case 3: this->preWidth = 97.f;
 				break;
-			case 4: this->preWidth = 201.f;
+			case 4: this->preWidth = 140.f;
 				break;
-			case 5: this->preWidth = 235.f;
+			case 5: this->preWidth = 187.f;
 				break;
-			case 6: this->preWidth = 266.f;
+			case 6: this->preWidth = 232.f;
 				break;
-			case 7: this->preWidth = 298.f;
+			case 7: this->preWidth = 278.f;
 				break;
-			case 8: this->preWidth = 330.f;
+			case 8: this->preWidth = 318.f;
 				break;
 			case 9: this->preWidth = 366.f;
 				break;

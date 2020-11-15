@@ -1,15 +1,15 @@
 #pragma once
 
-#include<SFML/Graphics.hpp>
 #include<iostream>
 #include<vector>
 #include<ctime>
 #include<sstream>
 
 #include"Player.h"
+#include"Platform.h"
 
 
-using namespace std;
+//using namespace std;
 using namespace sf;
 
 class Game
@@ -21,14 +21,16 @@ private:
 
 	bool endGame;
 	int health;
-
 	Player player;
+
+	
 
 public:
 	Game();
 	virtual ~Game();
 	void initVariables();
 	void innitWindow();
+	void platform();
 	const bool running() const;
 	const bool getEndGame() const;
 	void pollEvent();
