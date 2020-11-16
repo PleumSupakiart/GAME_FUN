@@ -1,4 +1,42 @@
 #include "Player.h"
+#include<string>
+
+bool Player::isHit() {
+	for (auto Wall : *wall) {
+		if (this->hitBox.getGlobalBounds().intersects(Wall->getShape().getGlobalBounds())) {
+			return true;
+		}
+	}
+	return false;
+}
+
+Platform* Player::hitWith() {
+	for (auto Wall : *wall) {
+		if (this->hitBox.getGlobalBounds().intersects(Wall->getShape().getGlobalBounds())) {
+			return Wall;
+		}
+	}
+}
+
+string Player::hitSide() {
+	if (Player::isHit()) {
+		if (Player::hitWith()->getShape().getGlobalBounds().contains(corner[0]) && Player::hitWith()->getShape().getGlobalBounds().contains(corner[1])) {
+			return "Top";
+		}
+		else if (Player::hitWith()->getShape().getGlobalBounds().contains(corner[2]) && Player::hitWith()->getShape().getGlobalBounds().contains(corner[3])) {
+			return "Bottom";
+		}
+		else if (Player::hitWith()->getShape().getGlobalBounds().contains(corner[0]) && Player::hitWith()->getShape().getGlobalBounds().contains(corner[2])) {
+			return "Left";
+		}
+		else if (Player::hitWith()->getShape().getGlobalBounds().contains(corner[1]) && Player::hitWith()->getShape().getGlobalBounds().contains(corner[3])) {
+			return "Right";
+		}
+	}
+	else{
+		return "None";
+	}
+}
 
 void Player::initVariables()
 {
@@ -32,11 +70,17 @@ void Player::initAnimetion()
 	this->aniTime.restart();
 }
 
-Player::Player()
+Player::Player(vector<Platform*>* Wall)
 {
+	this->wall = Wall;
 	this->initVariables();
 	this->initSprite();
 	this->initAnimetion();
+	this->hitBox.setPosition(sf::Vector2f(this->sprite.getPosition()));
+	this->hitBox.setSize(sf::Vector2f(90.f, 120.f));
+	this->hitBox.setFillColor(sf::Color::Transparent);
+	this->hitBox.setOutlineColor(sf::Color::Green);
+	this->hitBox.setOutlineThickness(1.f);
 }
 
 Player::~Player()
@@ -172,9 +216,17 @@ void Player::update(RenderTarget* target)
 {
 	this->updateInput();
 	this->updateAnimation();
+	this->hitBox.setPosition(sf::Vector2f(this->sprite.getPosition()));
+	this->corner[0] = this->hitBox.getPosition();
+	this->corner[1] = { this->hitBox.getPosition().x, this->hitBox.getPosition().y + this->hitBox.getSize().y };
+	this->corner[2] = { this->hitBox.getPosition().x + this->hitBox.getSize().x , this->hitBox.getPosition().y};
+	this->corner[3] = { this->hitBox.getPosition().x + this->hitBox.getSize().x , this->hitBox.getPosition().y + this->hitBox.getSize().y };
+	
+
 }
 
 void Player::render(RenderTarget* target)
 {
 	target->draw(this->sprite);
+	target->draw(this->hitBox);
 }

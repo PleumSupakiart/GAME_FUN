@@ -6,6 +6,7 @@ void Game::initVariables()
 	this->endGame = false;
 
 	this->health = 10;
+	wall.push_back(new Platform(200, 000, 200, 200));
 }
 
 void Game::innitWindow()
@@ -54,7 +55,7 @@ void Game::update()
 	this->pollEvent();
 	if (this->endGame == false)
 	{
-		this->player.update(this->window);
+		this->player->update(this->window);
 	}
 
 	if (this->health <= 0)
@@ -65,8 +66,11 @@ void Game::update()
 
 void Game::render()
 {
-	this->window->clear();
-	this->player.render(this->window);
+	this->window->clear(Color(150,150,150));
+	this->player->render(this->window);
+	for (auto Wall : wall) {
+		this->window->draw(Wall->getShape());
+	}
 	this->window->display();
 }
 
@@ -80,4 +84,8 @@ Game::Game()
 Game::~Game()
 {
 	delete this->window;
+	delete this->player;
+	for (int i = 0; i < wall.size(); i++) {
+		delete wall[i];
+	}
 }

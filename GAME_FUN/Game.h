@@ -6,6 +6,7 @@
 #include<ctime>
 #include<sstream>
 
+#include "Platform.h"
 #include"Player.h"
 
 
@@ -22,9 +23,10 @@ private:
 	bool endGame;
 	int health;
 
-	Player player;
+	Player* player = new Player(&wall);
 
 public:
+	vector<Platform*> wall;
 	Game();
 	virtual ~Game();
 	void initVariables();

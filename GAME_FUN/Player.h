@@ -4,6 +4,7 @@
 #include<SFML/Window.hpp>
 #include<SFML/Audio.hpp>
 #include<SFML/Network.hpp>
+#include "Platform.h"
 
 #include<iostream>
 
@@ -34,9 +35,16 @@ private:
 	void initVariables();
 	void initSprite();
 	void initAnimetion();
+	bool isHit();
+	string hitSide();
+	Platform* hitWith();
+
 
 public:
-	Player();
+	RectangleShape hitBox;
+	vector<Platform*>* wall;
+	sf::Vector2f corner[4];
+	Player(vector<Platform*>* Wall);
 	virtual ~Player();
 
 	void updateInput();
